@@ -79,8 +79,14 @@ class City(nx.DiGraph):
             The maximum number of cars per unit of length (km). This value
             denotes the maximum value of the parameter threshold.
 
+        color : string | {'black', 'red', 'green'}, default 'black'
+            'black' colored road are regular roads. 'red' colored road means
+            the direction of commute on the road has been reversed. 'green'
+            colored road means they have increased number of lanes, due to
+            the 'red' colored road.
         """
         self.add_edge(vertex_A, vertex_B, lanes=lanes, length=length,
                       threshold=threshold, special_A=special_A,
                       special_B=special_B, time_B=time_B,
-                      speed_limit=speed_limit, car_density=car_density)
+                      speed_limit=speed_limit, car_density=car_density,
+                      color=color)
