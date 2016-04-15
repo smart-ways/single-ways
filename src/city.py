@@ -35,7 +35,7 @@ class City(nx.DiGraph):
 
         self.add_node(index, coordinates=coordinates, name=name)
 
-    def add_route(self, vertex_A, vertex_B, lanes, length, threshold=0,
+    def add_route(self, vertex_A, vertex_B, lanes=2, length, threshold=0,
                   special_A=False, special_B=False, time_B=None,
                   speed_limit=30, car_density=None):
         """Add a route between one vertex to another.
@@ -79,7 +79,7 @@ class City(nx.DiGraph):
             The maximum number of cars per unit of length (km). This value
             denotes the maximum value of the parameter threshold.
 
-        color : string | {'black', 'red', 'green'}, default 'black'
+        color : string | {'black', 'green'}, default 'black'
             'black' colored road are regular roads. 'red' colored road means
             the direction of commute on the road has been reversed. 'green'
             colored road means they have increased number of lanes, due to
@@ -89,4 +89,4 @@ class City(nx.DiGraph):
                       threshold=threshold, special_A=special_A,
                       special_B=special_B, time_B=time_B,
                       speed_limit=speed_limit, car_density=car_density,
-                      color=color)
+                      color='black')
