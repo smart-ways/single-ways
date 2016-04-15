@@ -22,7 +22,7 @@ def get_parameter(city, route):
     pathways of the commute direction of a route.
     """
     all_alternates = list()
-    for path in nx.all_simple_paths(city, route[0], route[1]):
+    for path in nx.all_simple_paths(city, route[1], route[0]):
         if len(path) == 2:
             continue
         elif len(path) == 3:
@@ -59,8 +59,8 @@ def get_parameter(city, route):
 
     route_b = city[route[1]][route[0]]
 
-    num = path_aa['threshold']*path_aa['length'] + \
-          path_ab['threshold']*path_ab['length']
+    num = path_aa['threshold']*path_aa['length']*path_aa['lanes'] + \
+          path_ab['threshold']*path_ab['length']*path_ab['lanes']
     denom = path_aa['length'] + path_ab['length']
     total_threshold = num/denom
 
@@ -83,7 +83,7 @@ def get_parameter(city, route):
 
     new_car_density = new_cars / (path_a_length + path_b_length)
 
-    if total_threshold <= new_car_density:
+    if total_threshold*path_aa['lanes'] <= new_car_density:
         return False
     else:
         old_car_density = old_cars / (path_a_length + path_b_length)

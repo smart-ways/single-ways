@@ -13,23 +13,14 @@ class MainApp(QtGui.QMainWindow, gui.Ui_SmartWays):
         self.btnReadCityData.clicked.connect(self.read_city_data)
         self.btnReadTrafficData.clicked.connect(self.read_traffic_data)
         self.btnProcess.clicked.connect(self.process)
-
-    def _plot_city(self, G):
-        pos = nx.circular_layout(G)
-        node_labels = {}
-        for u in G.nodes():
-            node_labels[u] = u
-        nx.draw(G, pos)
-        nx.draw_networkx_labels(G, pos, labels = node_labels)
-        plt.show()
+        self.btnViewCity.clicked.connect(self.view_city)
 
     def read_city_data(self):
         file_city_data = QtGui.QFileDialog.getOpenFileName(self)
         self.lblProcessing.setText("Processing...")
-        # Plot city
         self.city = nx.read_edgelist(str(file_city_data), create_using=nx.DiGraph())
-        self._plot_city(self.city)
         self.lblProcessing.setText("Done. OK")
+        self.btnViewCity.setEnabled(True)
 
     def read_traffic_data(self):
         file_traffic_data = QtGui.QFileDialog.getOpenFileName(self)
@@ -41,6 +32,17 @@ class MainApp(QtGui.QMainWindow, gui.Ui_SmartWays):
         self.lblProcessing.setText("Processing...")
         # Add traffic data
         self.lblProcessing.setText("Done. OK")
+
+    def view_city(self):
+        pos = nx.circular_layout(self.city)
+        node_labels = {}
+        for u in self.city.nodes():
+            node_labels[u] = u
+        nx.draw(self.city, pos)
+        nx.draw_networkx_labels(self.city, pos, labels=node_labels)
+        self.btnViewCity.setEnabled(True)
+        plt.show()
+
 
 def main():
     app = QtGui.QApplication(sys.argv)
