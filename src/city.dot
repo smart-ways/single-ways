@@ -1,0 +1,6 @@
+digraph G {
+1;
+0;
+1 -> 0  [lanes=2, key=0, time=100];
+0 -> 1  [lanes=2, key=0, time=300];
+}
